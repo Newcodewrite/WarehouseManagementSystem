@@ -1,0 +1,60 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: wms-backend
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/wms_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 22MB
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  ai:
+    openai:
+      # DeepSeek 兼容 OpenAI 接口；也可换成 https://api.openai.com 等任意兼容服务
+      base-url: ${AI_BASE_URL:https://api.deepseek.com}
+      api-key: ${AI_API_KEY:sk-please-config-your-api-key}
+      chat:
+        options:
+          model: ${AI_MODEL:deepseek-chat}
+          temperature: 0.7
+    retry:
+      max-attempts: 1
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+app:
+  jwt:
+    # HS256 密钥，生产环境请修改
+    secret: wms-secret-key-please-change-me-0123456789-abcdefghijklmnop
+    expire-hours: 24
+  # Redis 缓存开关（未部署 Redis 时保持 false，系统自动降级为本地缓存）
+  redis-enabled: ${REDIS_ENABLED:false}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    com.lanxi.wms: info

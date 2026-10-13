@@ -1,0 +1,1 @@
+function i(r){const n=Number(r);return r==null||Number.isNaN(n)?"¥0.00":"¥"+n.toLocaleString("zh-CN",{minimumFractionDigits:2,maximumFractionDigits:2})}function t(r){const n=Number(r);return r==null||Number.isNaN(n)?"0":n.toLocaleString("zh-CN")}function e(r){return r?String(r).replace("T"," ").slice(0,19):"-"}export{t as a,e as b,i as f};
